@@ -54,7 +54,7 @@ figure(1);
 hold on;
 grid on;
 bar(lambda, APD_values');                            % Bar Graph
-ylim([0 0.6]);                                       % Set y axis values
+ylim([0 9]);                                       % Set y axis values
 er = errorbar(lambda, APD_values', APD_terms);       % Set the error bar
 er.Color = [0 0 0];
 er.LineStyle = 'none';
