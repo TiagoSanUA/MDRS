@@ -1,11 +1,11 @@
-%ex1.a
+%ex1.b
 
 N = 20;                             % Times to run the simulation
 
 P = 100000;                         % Number of packets to be transmitted (stopping criterium)
 C = 10;                             % link bandwidth (Mbps)
 f = 1e6;                            % Queue size (Bytes)
-b = 10^-6;                          % Bit error rate
+b = 10^-4;                          % Bit error rate
 
 
 lambda = [1500 1600 1700 1800 1900]; % rate of arrival to the queue in pps
@@ -49,7 +49,7 @@ for i = 1:length(lambda)
 
 end
 
-
+% Figure to show the asked results for 1.b)
 figure(1);
 hold on;
 grid on;
@@ -64,6 +64,7 @@ title('Average Packet Delay vs Packet Rate');
 hold off;
 saveas(gcf, 'Avg_Packet_Delay_vs_Packet_Rate.png');  % Save the graph as PNG
 
+% Figure to show the asked results for 1.b)
 figure(2);
 hold on;
 grid on;
