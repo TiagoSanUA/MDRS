@@ -27,5 +27,4 @@ end
 
 ploss_ber = (ploss_ber ./ (0.19 + 0.23 + 0.17 + ((109 - 65 + 1) + (1517 - 111 + 1)) * prob_left)) * 100;
 
-fprintf(['Considering that the bit error rate is the only factor that can cause Packet to be lost, the theoretical packet loss (%%)\n' ...
-    'for a bit error rate of 10^-6 is: %.4f %%\nand for a bit error rate of 10^-4 is: %.4f %%\n'], ploss_ber(1), ploss_ber(2));
+fprintf(['Packet loss for bit error rate of 10^-6: %.4f %%\nand for bit error rate of 10^-4 is: %.4f %%\n'], ploss_ber(1), ploss_ber(2));
