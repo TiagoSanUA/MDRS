@@ -1,5 +1,7 @@
-function [bestSol,bestObjective,noCycles,avObjective] = MultiHillGreedyAlgorithm(nNodes,Links,T,sP,nSP,timeLimit)
+function [bestTime,bestCicleNum,bestSol,bestObjective,noCycles,avObjective] = MultiHillGreedyAlgorithm(nNodes,Links,T,sP,nSP,timeLimit)
     t= tic;
+    bestTime = 0;
+    bestCicleNum = 0;
     nFlows= size(T,1);
     bestObjective= inf;
     noCycles= 0;
@@ -15,6 +17,8 @@ function [bestSol,bestObjective,noCycles,avObjective] = MultiHillGreedyAlgorithm
         if load<bestObjective
             bestSol= sol;
             bestObjective= load;
+            bestTime = toc(t);
+            bestCicleNum = noCycles;
         end
     end
     avObjective= aux/noCycles;
@@ -23,19 +27,37 @@ end
 
  function [sol,load] = GR(nFlows,nSP,nNodes,Links,T,sP)
         sol = zeros(1,nFlows);
-        randFlows = randperm(nFlows);
-        for f= randFlows
-            temp = inf;
-            for p= 1:nSP(f)
-                sol(f)=p;
-                Loads= calculateLinkLoads(nNodes,Links,T,sP,sol);
-                load= max(max(Loads(:,3:4)));
-                if load<temp
-                    temp= load;
-                    best_p = p;
+        if nSP == 1
+            randFlows = nFlows;
+            for f= randFlows
+                temp = inf;
+                for p= 1:nSP(f)
+                    sol(f)=p;
+                    Loads= calculateLinkLoads(nNodes,Links,T,sP,sol);
+                    load= max(max(Loads(:,3:4)));
+                    if load<temp
+                        temp= load;
+                        best_p = p;
+                    end
                 end
+                sol(f)= best_p;
             end
-            sol(f)= best_p;
+
+        else
+            randFlows = randperm(nFlows);
+            for f= randFlows
+                temp = inf;
+                for p= 1:nSP(f)
+                    sol(f)=p;
+                    Loads= calculateLinkLoads(nNodes,Links,T,sP,sol);
+                    load= max(max(Loads(:,3:4)));
+                    if load<temp
+                        temp= load;
+                        best_p = p;
+                    end
+                end
+                sol(f)= best_p;
+            end
         end
  end
 
