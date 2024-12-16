@@ -27,23 +27,6 @@ end
 
  function [sol,load] = GR(nFlows,nSP,nNodes,Links,T,sP)
         sol = zeros(1,nFlows);
-        if nSP == 1
-            randFlows = nFlows;
-            for f= randFlows
-                temp = inf;
-                for p= 1:nSP(f)
-                    sol(f)=p;
-                    Loads= calculateLinkLoads(nNodes,Links,T,sP,sol);
-                    load= max(max(Loads(:,3:4)));
-                    if load<temp
-                        temp= load;
-                        best_p = p;
-                    end
-                end
-                sol(f)= best_p;
-            end
-
-        else
             randFlows = randperm(nFlows);
             for f= randFlows
                 temp = inf;
