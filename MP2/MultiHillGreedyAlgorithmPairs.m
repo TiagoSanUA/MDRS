@@ -36,11 +36,9 @@ function [sol, load] = GR(nFlows, nSP, nNodes, Links, T, sP)
         best_p = 1; % Initialize best_p with a default path index
         for p = 1:nSP(f)
             sol(f) = p;
-            if T(f, 1) == 2 % For Unicast Service 2, use calculateLinkBand1to1
-                Loads = calculateLinkBand1to1(nNodes, Links, T, sP, sol);
-            else
-                Loads = calculateLinkLoads(nNodes, Links, T, sP, sol);
-            end
+            
+            Loads = calculateLinkBand1to1(nNodes, Links, T, sP, sol);
+         
             load = max(max(Loads(:, 3:4)));
             if load < temp
                 temp = load;
@@ -49,11 +47,9 @@ function [sol, load] = GR(nFlows, nSP, nNodes, Links, T, sP)
         end
         sol(f) = best_p;
     end
-    if T(f, 1) == 2
-        Loads = calculateLinkBand1to1(nNodes, Links, T, sP, sol);
-    else
-        Loads = calculateLinkLoads(nNodes, Links, T, sP, sol);
-    end
+   
+    Loads = calculateLinkBand1to1(nNodes, Links, T, sP, sol);
+    
     load = max(max(Loads(:, 3:4)));
 end
 
@@ -68,11 +64,7 @@ function [sol, load] = MHR(nFlows, nSP, nNodes, Links, T, sP, sol, load)
                 if path ~= sol(flow)
                     auxSol = sol;
                     auxSol(flow) = path;
-                    if T(flow, 1) == 2 % For Unicast Service 2, use calculateLinkBand1to1
-                        Loads = calculateLinkBand1to1(nNodes, Links, T, sP, auxSol);
-                    else
-                        Loads = calculateLinkLoads(nNodes, Links, T, sP, auxSol);
-                    end
+                    Loads = calculateLinkBand1to1(nNodes, Links, T, sP, auxSol);
                     auxLoad = max(max(Loads(:, 3:4)));
                     if auxLoad < BestLoad
                         BestLoad = auxLoad;
